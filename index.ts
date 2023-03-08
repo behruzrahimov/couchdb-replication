@@ -148,4 +148,4 @@ async function CouchDbExample() {
   await asyncCall();
 }
 
-CouchDbExample();
+await CouchDbExample();
