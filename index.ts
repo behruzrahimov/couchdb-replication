@@ -1,9 +1,9 @@
 import Nano from "nano";
-const configBob = "http://bob:bob!@192.168.68.107:5984";
-const configAlice = "http://alice:alice!@192.168.68.107:5980";
+const urlBob = "http://bob:bob!@192.168.68.107:5984";
+const urlAlice = "http://alice:alice!@192.168.68.107:5980";
 async function CouchDbExample() {
-  const nano = Nano(configBob);
-  const nano2 = Nano(configAlice);
+  const nano = Nano(urlBob);
+  const nano2 = Nano(urlAlice);
   async function isDatabaseExist(name: string): Promise<boolean> {
     try {
       await nano.db.get(name);
@@ -67,13 +67,13 @@ async function CouchDbExample() {
     });
     try {
       const isExist = await isReplicationExist({
-        source: `${configBob}/${db.config.db}`,
-        target: `${configAlice}/${db.config.db}`,
+        source: `${urlBob}/${db.config.db}`,
+        target: `${urlAlice}/${db.config.db}`,
       });
       if (!isExist) {
         const response = await nano.db.replication.enable(
-          `${configBob}/${db.config.db}`,
-          `${configAlice}/${db.config.db}`,
+          `${urlBob}/${db.config.db}`,
+          `${urlAlice}/${db.config.db}`,
           {
             create_target: true,
             continuous: false,
@@ -82,13 +82,13 @@ async function CouchDbExample() {
         console.log("response", response);
       }
       const isExist2 = await isReplicationExist2({
-        source: `${configAlice}/${db.config.db}`,
-        target: `${configBob}/${db.config.db}`,
+        source: `${urlAlice}/${db.config.db}`,
+        target: `${urlBob}/${db.config.db}`,
       });
       if (!isExist2) {
         const response2 = await nano2.db.replication.enable(
-          `${configAlice}/${db.config.db}`,
-          `${configBob}/${db.config.db}`,
+          `${urlAlice}/${db.config.db}`,
+          `${urlBob}/${db.config.db}`,
           {
             create_target: true,
             continuous: false,
