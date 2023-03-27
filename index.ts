@@ -130,6 +130,7 @@ async function CouchDbExample() {
       return result.docs.length > 0;
     }
   }
+
   await asyncCall();
 }
 await CouchDbExample();
